@@ -1,115 +1,150 @@
+import { useState, useEffect } from "react";
+import Nav from "@/components/nav";
+import { ProductType } from "@/models/product_type";
+import { Product } from "@/models/product";
 import Image from "next/image";
-import localFont from "next/font/local";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import encryptData from "@/helper/encrypt";
+import { useRouter } from "next/router";
 
 export default function Home() {
-  return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              pages/index.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [productTypes, setProductTypes] = useState([]);
+  const [product, setProduct] = useState([]);
+  const [index, setIndex] = useState(0);
+  const [load, setLoad] = useState(false);
+  const router = useRouter();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  useEffect(() => {
+    if (!load) {
+      const fetchVType = async () => {
+        try {
+          const typeProduct = await ProductType.all();
+          const product = await Product.all();
+          setProductTypes(typeProduct);
+          setProduct(product);
+          setLoad(true);
+        } catch (e) {
+          console.error("Error fetching v_type: ", e);
+        }
+      };
+      fetchVType();
+    }
+  }, [load]);
+
+  return (
+    <div className="overflow-x-hidden">
+      <Nav />
+      <div className="w-full pt-24 ps-12 flex flex-col items-center justify-center gap-10">
+        {productTypes && product && product[index] && (
+          <div className="flex flex-col w-[85rem] items-center gap-7">
+            <div className="flex flex-col w-[67rem] gap-12">
+              <h1 className="text-black text-4xl self-start">
+                <span className="font-extrabold">FASTRON </span>
+                <span>SERIES</span>
+              </h1>
+              <div className="flex flex-row w-full border-b-[#b73628] border-b-4 pb-5 justify-around">
+                {productTypes.map((value, index) => (
+                  <Image key={index} src={`/img/${value.img}`} width={146} height={69} alt={value.name} />
+                ))}
+              </div>
+            </div>
+            <div className="w-[85rem] box-border">
+              <div className="flex gap-[2.4rem] items-start w-[full] h-[20rem] ps-[.9rem] py-[.6rem] overflow-x-scroll overflow-y-hidden">
+                {product.map((value, i) => {
+                  return (
+                    <div
+                      key={i}
+                      className={`${i !== index && "opacity-30"} rounded-3xl text-black text-center font-semibold flex flex-col items-center justify-end gap-12 w-[200px] shadow-2xl shadow-slate-500  p-5 box-border`}
+                      onClick={() => {
+                        if (index !== i) setIndex(i);
+                        else {
+                          const data = {
+                            id: value.id,
+                            name: value.productType[0].name + " " + value.consistency,
+                          };
+                          const encryptedData = encryptData(data);
+                          router.push(`/product/${encryptedData}`);
+                        }
+                      }}
+                    >
+                      <p>
+                        {value.productType[0].name} {value.consistency}{" "}
+                      </p>
+                      <div className="bg-black w-[150px] h-[150px] flex items-center justify-center rounded-3xl">
+                        <Image src={`/img/${value.image}`} width={120} height={120} className="-translate-y-6" alt={`image of ${value.name}`} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="flex flex-col border-b-[1px] border-b-black text-black mb-7 w-full py-8">
+              <div className="flex flex-row items-start justify-between">
+                <h1 className="font-bold text-2xl">Deskripsi</h1>
+                <p className="bg-slate-700 font-extrabold text-lg p-2 rounded-2xl text-white">
+                  Harga Rekomendasi |{" "}
+                  {product[index].price.map((value, i) => (
+                    <span key={i}>
+                      {value.amount}L Rp. {value.price.toLocaleString("id-ID")} {i < product[index].price.length - 1 ? "| " : ""}
+                    </span>
+                  ))}
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-row items-start gap-12 justify-between text-black w-full mb-24">
+              <p className="w-1/3">{product[index].description}</p>
+              <div className="flex flex-col w-1/3 gap-2">
+                <div className="flex flex-row w-full justify-start items-center gap-2">
+                  <Image src="/img/icon-sae.png" width={50} height={50} alt="sae icon" />
+                  <div className="flex flex-col gap-2 w-full">
+                    <p className="border-b-black border-b-[1px] w-full">Consistency/SAE</p>
+                    <p className="font-bold text-slate-500 text-lg">{product[index].consistency}</p>
+                  </div>
+                </div>
+                <div className="flex flex-row w-full justify-start items-center gap-2">
+                  <Image src="/img/icon-base-oil.png" width={50} height={50} alt="base oil icon" />
+                  <div className="flex flex-col gap-2 w-full">
+                    <p className="border-b-black border-b-[1px] w-full">Base Oil</p>
+                    <p className="font-bold text-slate-500 text-lg">{product[index].base_oil}</p>
+                  </div>
+                </div>
+                <div className="flex flex-row w-full justify-start items-center gap-2">
+                  <Image src="/img/icon-specification.png" width={50} height={50} alt="specification icon" />
+                  <div className="flex flex-col gap-2 w-full">
+                    <p className="border-b-black border-b-[1px] w-full">Spesifikasi</p>
+                    <p className="font-bold text-slate-500 text-lg">{product[index].spesification}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col w-1/3 gap-2">
+                <div className="flex flex-row w-full justify-start items-start gap-2">
+                  <Image src="/img/icon-benefit.png" width={50} height={50} alt="benefit icon" />
+                  <div className="flex flex-col gap-2">
+                    <p className="border-b-black border-b-[1px] w-full">Kelebihan</p>
+                    <ul className="list-decimal ps-10">
+                      {product[index].excess.map((value, i) => (
+                        <li key={i}>{value.content}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                <div className="flex flex-row w-full justify-start items-start gap-2">
+                  <Image src="/img/icon-usage.png" width={50} height={50} alt="usage icon" />
+                  <div className="flex flex-col gap-2 w-full">
+                    <p className="border-b-black border-b-[1px] w-full">Base Oil</p>
+                    <p className="font-bold text-black text-lg">
+                      {product[index].utility.map((value, index) => (
+                        <span key={index}>
+                          {value.content} {index < product[index].utility.length - 1 ? "/ " : ""}
+                        </span>
+                      ))}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
