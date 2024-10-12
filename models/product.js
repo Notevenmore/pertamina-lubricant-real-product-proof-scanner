@@ -43,7 +43,6 @@ export class Product {
 
   static async whereId(id) {
     const rows = await this.getData(`WHERE id = ${id}`);
-    console.log(rows[0]);
     const v_type = await V_Type.whereId(rows[0].v_type_id);
     const product_type = await ProductType.whereId(rows[0].product_type_id);
     const excess = await Excess.getData(`WHERE product_id = ${rows[0].id}`);

@@ -1,9 +1,8 @@
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
-import decryptData from "@/helper/decrypt";
 import axios from "axios";
 import Image from "next/image";
-import { Product } from "@/models/product";
+import { ProductSell } from "@/models/product_sell";
 
 import Nav from "@/components/nav";
 
@@ -12,6 +11,8 @@ export default function Products({ data }) {
   const [product, setProduct] = useState();
   const [barcodeSource, setBarcodeSource] = useState(null);
   const [load, setLoad] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (router.isReady) {
@@ -29,9 +30,12 @@ export default function Products({ data }) {
   useEffect(() => {
     if (!load) {
       const fetchData = async () => {
-        const result = decryptData(data);
-        const product = await Product.whereId(result.id);
-        setProduct(product);
+        const product_sell = await ProductSell.whereId(data);
+        if (product_sell) setProduct(product_sell);
+        else {
+          setErrorMessage("PRODUCT TIDAK VALID");
+          setError(true);
+        }
         setLoad(true);
       };
       fetchData();
@@ -39,17 +43,17 @@ export default function Products({ data }) {
   }, [data, load]);
 
   return (
-    <div className="w-screen">
+    <div className="w-screen h-[calc(100vh-10vh)]">
       <Nav />
-      {barcodeSource && (
+      {barcodeSource && product && !error ? (
         <div className=" flex items-center justify-center w-full p-10 gap-24">
-          <div className="flex flex-col gap-12 items-center justify-center w-1/4">
+          <div className="flex flex-col gap-2 items-center justify-center w-1/4">
             <div className="bg-black w-[300px] h-[300px] flex items-center justify-center rounded-3xl">
               <Image src={`/img/${product.image}`} width={250} height={250} className="-translate-y-12" alt={`image of ${product.name}`} />
             </div>
-            <p className="text-black font-bold text-4xl text-center">
-              {product.productType[0].name} {product.consistency}{" "}
-            </p>
+            <p className="text-black font-bold text-4xl text-center">{product.product_name}</p>
+            <p className="text-black font-bold text-xl text-center">{product.is_sold ? "Terkonfirmasi telah dibeli" : "Terkonfirmasi belum dibeli"}</p>
+            <p className="px-10 py-2 font-black text-xl text-center border-red-500 border-2 rounded-xl text-red-500">VERIFIED</p>
           </div>
           <div className="flex flex-col items-center justify-center gap-10 w-3/4">
             <div className="flex flex-col items-center">
@@ -124,7 +128,14 @@ export default function Products({ data }) {
             </div>
           </div>
         </div>
-      )}
+      ) : error ? (
+        <div className="w-full h-full flex flex-col items-center justify-center gap-3">
+          <div className="w-96 h-14 font-black text-red-500 border-red-500 border-2 px-10 py-3 rounded-xl flex items-center justify-center group hover:bg-red-500 group-hover:bg-red-500 duration-300 cursor-pointer">
+            <p className="text-center group-hover:text-white duration-300">PRODUCT TIDAK DITEMUKAN / BARCODE PALSU</p>
+          </div>
+          <p className="text-black font-semibold text-lg w-96 text-center">Perhatikan keaslian produk. Produk yang benar, akan dapat terlihat pada website pertaminalubricants.com melalui barcode yang telah disediakan</p>
+        </div>
+      ) : null}
     </div>
   );
 }
