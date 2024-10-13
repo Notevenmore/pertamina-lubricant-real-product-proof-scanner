@@ -1,0 +1,22 @@
+services:
+  db:
+    image: mysql
+    restart: always
+    environtment: 
+      MYSQL_ROOT_PASSWORD: pertaminalubricant123
+      MYSQL_DATABASE: pertamina_lubricant
+      MYSQL_USER: pertaminalubricant
+      MYSQL_PASSWORD: pertaminalubricant123
+  app:
+    build: 
+      context: .
+    image: nextjs-dev
+    ports: 
+      - "3000:3000"
+    environtment: 
+      MYSQL_HOST: localhost
+      MYSQL_USER: pertaminalubricant
+      MYSQL_PASSWORD: pertaminalubricant123
+      MYSQL_DATABASE: pertamina_lubricant
+    depends_on:
+      - db

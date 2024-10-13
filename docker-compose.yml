@@ -1,0 +1,28 @@
+services:
+  mysql: 
+    image: mysql:9.0
+    restart: always
+    environment: 
+      MYSQL_ROOT_PASSWORD: pertaminalubricant
+      MYSQL_DATABASE: pertamina_lubricant
+      MYSQL_USER: pertamina
+      MYSQL_PASSWORD: user_pertaminalubricant
+    volumes:
+     - db_data:/var/lib/mysql
+     - ./database/plproduct.sql:/docker-entrypoint-initdb.d/plproduct.sql
+  fe:
+    build: 
+      context: ./fe
+      dockerfile: Dockerfile
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=pertaminalubricant
+      - MYSQL_DATABASE=pertamina_lubricant
+    restart: always
+    ports: 
+     - "3000:3000"
+    depends_on:
+      - mysql
+volumes: 
+  db_data: 
