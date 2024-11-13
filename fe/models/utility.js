@@ -6,11 +6,11 @@ export default class Utility {
   }
 
   static async getData(query = "") {
-    const responseProductUtility = await axios.post("/api/getData", { query: query, tableName: "product_utility" });
+    const responseProductUtility = await axios.post("/lubricants/api/getData", { query: query, tableName: "product_utility" });
     const product_utility = responseProductUtility.data;
     const utility = await Promise.all(
       product_utility.map(async (value) => {
-        const responseUtility = await axios.post("/api/getData", { query: `WHERE id = ${value.utility_id}`, tableName: "utility" });
+        const responseUtility = await axios.post("/lubricants/api/getData", { query: `WHERE id = ${value.utility_id}`, tableName: "utility" });
         return responseUtility.data[0];
       })
     );

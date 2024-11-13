@@ -7,7 +7,7 @@ export class V_Type {
   }
 
   static async getData(query = "") {
-    const response = await axios.post("/api/getData", { query: query, tableName: "v_type" });
+    const response = await axios.post("/lubricants/api/getData", { query: query, tableName: "v_type" });
     const data = response.data;
     return data;
   }

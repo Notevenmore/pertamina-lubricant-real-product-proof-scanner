@@ -7,11 +7,11 @@ export default class Excess {
   }
 
   static async getData(query = "") {
-    const responseProductExcess = await axios.post("/api/getData", { query: query, tableName: "product_excess" });
+    const responseProductExcess = await axios.post("/lubricants/api/getData", { query: query, tableName: "product_excess" });
     const product_excess = responseProductExcess.data;
     const excess = await Promise.all(
       product_excess.map(async (value) => {
-        const responseExcess = await axios.post("/api/getData", { query: `WHERE id = ${value.excess_id}`, tableName: "excess" });
+        const responseExcess = await axios.post("/lubricants/api/getData", { query: `WHERE id = ${value.excess_id}`, tableName: "excess" });
         return responseExcess.data[0];
       })
     );

@@ -49,7 +49,7 @@ export default function Products({ data }) {
         <div className=" flex items-center justify-center w-full p-10 gap-24">
           <div className="flex flex-col gap-2 items-center justify-center w-1/4">
             <div className="bg-black w-[300px] h-[300px] flex items-center justify-center rounded-3xl">
-              <Image src={`/img/${product.image}`} width={250} height={250} className="-translate-y-12" alt={`image of ${product.name}`} />
+              <Image src={`/lubricants/img/${product.image}`} width={250} height={250} className="-translate-y-12" alt={`image of ${product.name}`} />
             </div>
             <p className="text-black font-bold text-4xl text-center">{product.product_name}</p>
             <p className="text-black font-bold text-xl text-center">{product.is_sold ? "Terkonfirmasi telah dibeli" : "Terkonfirmasi belum dibeli"}</p>
@@ -77,21 +77,21 @@ export default function Products({ data }) {
                 </div>
                 <div className="flex flex-col w-2/5 gap-2">
                   <div className="flex flex-row w-full justify-start items-center gap-2">
-                    <Image src="/img/icon-sae.png" width={50} height={50} alt={`SAE Icon`} />
+                    <Image src="/lubricants/img/icon-sae.png" width={50} height={50} alt={`SAE Icon`} />
                     <div className="flex flex-col gap-2 w-full">
                       <p className="border-b-black border-b-[1px] w-full">Consistency/SAE</p>
                       <p className="font-bold text-slate-500 text-lg">{product.consistency}</p>
                     </div>
                   </div>
                   <div className="flex flex-row w-full justify-start items-center gap-2">
-                    <Image src="/img/icon-base-oil.png" width={50} height={50} alt={"base oil icon"} />
+                    <Image src="/lubricants/img/icon-base-oil.png" width={50} height={50} alt={"base oil icon"} />
                     <div className="flex flex-col gap-2 w-full">
                       <p className="border-b-black border-b-[1px] w-full">Base Oil</p>
                       <p className="font-bold text-slate-500 text-lg">{product.base_oil}</p>
                     </div>
                   </div>
                   <div className="flex flex-row w-full justify-start items-center gap-2">
-                    <Image src="/img/icon-specification.png" width={50} height={50} alt="specification icon" />
+                    <Image src="/lubricants/img/icon-specification.png" width={50} height={50} alt="specification icon" />
                     <div className="flex flex-col gap-2 w-full">
                       <p className="border-b-black border-b-[1px] w-full">Spesifikasi</p>
                       <p className="font-bold text-slate-500 text-lg">{product.spesification}</p>
@@ -100,7 +100,7 @@ export default function Products({ data }) {
                 </div>
                 <div className="flex flex-col w-2/5 gap-2">
                   <div className="flex flex-row w-full justify-start items-start gap-2">
-                    <Image src="/img/icon-benefit.png" width={50} height={50} alt="benefit icon" />
+                    <Image src="/lubricants/img/icon-benefit.png" width={50} height={50} alt="benefit icon" />
                     <div className="flex flex-col gap-2">
                       <p className="border-b-black border-b-[1px] w-full">Kelebihan</p>
                       <ul className="list-decimal ps-10">
@@ -111,7 +111,7 @@ export default function Products({ data }) {
                     </div>
                   </div>
                   <div className="flex flex-row w-full justify-start items-start gap-2">
-                    <Image src="/img/icon-usage.png" width={50} height={50} alt="usage icon" />
+                    <Image src="/lubricants/img/icon-usage.png" width={50} height={50} alt="usage icon" />
                     <div className="flex flex-col gap-2 w-full">
                       <p className="border-b-black border-b-[1px] w-full">Base Oil</p>
                       <p className="font-bold text-black text-lg">

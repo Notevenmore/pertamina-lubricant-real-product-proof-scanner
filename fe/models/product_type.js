@@ -8,7 +8,7 @@ export class ProductType {
   }
 
   static async getData(query = "") {
-    const response = await axios.post("/api/getData", { query: query, tableName: "product_type" });
+    const response = await axios.post("/lubricants/api/getData", { query: query, tableName: "product_type" });
     const data = response.data;
     return data;
   }

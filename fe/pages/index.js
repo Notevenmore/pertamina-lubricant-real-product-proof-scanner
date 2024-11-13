@@ -43,7 +43,7 @@ export default function Home() {
               </h1>
               <div className="flex flex-row w-full border-b-[#b73628] border-b-4 pb-5 justify-around">
                 {productTypes.map((value, index) => (
-                  <Image key={index} src={`/img/${value.img}`} width={146} height={69} alt={value.name} />
+                  <Image key={index} src={`/lubricants/img/${value.img}`} width={146} height={69} alt={value.name} />
                 ))}
               </div>
             </div>
@@ -70,7 +70,7 @@ export default function Home() {
                         {value.productType[0].name} {value.consistency}{" "}
                       </p>
                       <div className="bg-black w-[150px] h-[150px] flex items-center justify-center rounded-3xl">
-                        <Image src={`/img/${value.image}`} width={120} height={120} className="-translate-y-6" alt={`image of ${value.name}`} />
+                        <Image src={`/lubricants/img/${value.image}`} width={120} height={120} className="-translate-y-6" alt={`image of ${value.name}`} />
                       </div>
                     </div>
                   );
@@ -94,21 +94,21 @@ export default function Home() {
               <p className="w-1/3">{product[index].description}</p>
               <div className="flex flex-col w-1/3 gap-2">
                 <div className="flex flex-row w-full justify-start items-center gap-2">
-                  <Image src="/img/icon-sae.png" width={50} height={50} alt="sae icon" />
+                  <Image src="/lubricants/img/icon-sae.png" width={50} height={50} alt="sae icon" />
                   <div className="flex flex-col gap-2 w-full">
                     <p className="border-b-black border-b-[1px] w-full">Consistency/SAE</p>
                     <p className="font-bold text-slate-500 text-lg">{product[index].consistency}</p>
                   </div>
                 </div>
                 <div className="flex flex-row w-full justify-start items-center gap-2">
-                  <Image src="/img/icon-base-oil.png" width={50} height={50} alt="base oil icon" />
+                  <Image src="/lubricants/img/icon-base-oil.png" width={50} height={50} alt="base oil icon" />
                   <div className="flex flex-col gap-2 w-full">
                     <p className="border-b-black border-b-[1px] w-full">Base Oil</p>
                     <p className="font-bold text-slate-500 text-lg">{product[index].base_oil}</p>
                   </div>
                 </div>
                 <div className="flex flex-row w-full justify-start items-center gap-2">
-                  <Image src="/img/icon-specification.png" width={50} height={50} alt="specification icon" />
+                  <Image src="/lubricants/img/icon-specification.png" width={50} height={50} alt="specification icon" />
                   <div className="flex flex-col gap-2 w-full">
                     <p className="border-b-black border-b-[1px] w-full">Spesifikasi</p>
                     <p className="font-bold text-slate-500 text-lg">{product[index].spesification}</p>
@@ -117,7 +117,7 @@ export default function Home() {
               </div>
               <div className="flex flex-col w-1/3 gap-2">
                 <div className="flex flex-row w-full justify-start items-start gap-2">
-                  <Image src="/img/icon-benefit.png" width={50} height={50} alt="benefit icon" />
+                  <Image src="/lubricants/img/icon-benefit.png" width={50} height={50} alt="benefit icon" />
                   <div className="flex flex-col gap-2">
                     <p className="border-b-black border-b-[1px] w-full">Kelebihan</p>
                     <ul className="list-decimal ps-10">
@@ -128,7 +128,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="flex flex-row w-full justify-start items-start gap-2">
-                  <Image src="/img/icon-usage.png" width={50} height={50} alt="usage icon" />
+                  <Image src="/lubricants/img/icon-usage.png" width={50} height={50} alt="usage icon" />
                   <div className="flex flex-col gap-2 w-full">
                     <p className="border-b-black border-b-[1px] w-full">Base Oil</p>
                     <p className="font-bold text-black text-lg">

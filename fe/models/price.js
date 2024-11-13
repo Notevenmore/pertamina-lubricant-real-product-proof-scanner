@@ -8,7 +8,7 @@ export default class Price {
   }
 
   static async getData(query = "") {
-    const response = await axios.post("/api/getData", { query: query, tableName: "price" });
+    const response = await axios.post("/lubricants/api/getData", { query: query, tableName: "price" });
     const data = response.data;
     return data;
   }
